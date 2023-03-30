@@ -5,10 +5,21 @@ class Node {
   }
 }
 
-class LinkedList {
+export default class LinkedList {
   constructor() {
     this.count = 0;
     this.head = undefined;
+  }
+
+  indexOf(element) {
+    let current = this.head;
+    for (let i = 0; i < this.size() && current != null; i++) {
+      if (element === current.element) {
+        return i;
+      }
+      current = current.next;
+    }
+    return -1;
   }
 
   //add element to the tail
@@ -66,12 +77,12 @@ class LinkedList {
   remove(index) {
     if (index >= 0 && index < this.count) {
       let current = this.head;
-
+      // if index is 0
       if (index === 0) {
         this.head = current.next;
       } else {
         let previous;
-        // if index is 0
+
         for (let i = 0; i < index; i++) {
           previous = current;
           current = current.next;
@@ -79,7 +90,9 @@ class LinkedList {
         previous.next = current.next;
       }
       this.count--;
+      return true;
     }
+    return false;
   }
 
   printElements() {
