@@ -15,7 +15,7 @@ class HashTableSeparateChaining {
     this.table = new Array(buckets);
     this.count = 0;
   }
-  _loseloseHashCode(key) {
+  #loseloseHashCode(key) {
     const tableKey = key.toString();
 
     let hash = 0;
@@ -26,13 +26,13 @@ class HashTableSeparateChaining {
     return hash % this.table.length;
   }
 
-  _hashCode(key) {
-    return this._loseloseHashCode(key);
+  #hashCode(key) {
+    return this.#loseloseHashCode(key);
   }
 
   put(key, value) {
     if (key != null && value != null) {
-      const index = this._hashCode(key);
+      const index = this.#hashCode(key);
 
       if (this.table[index] == null) {
         this.table[index] = new LinkedList();
@@ -47,7 +47,7 @@ class HashTableSeparateChaining {
   }
 
   get(key) {
-    const index = this._hashCode(key);
+    const index = this.#hashCode(key);
     const linkedList = this.table[index];
 
     if (linkedList != null && !linkedList.isEmpty()) {
@@ -64,7 +64,7 @@ class HashTableSeparateChaining {
   }
 
   remove(key) {
-    const index = this._hashCode(key);
+    const index = this.#hashCode(key);
     const linkedList = this.table[index];
 
     if (linkedList != null && !linkedList.isEmpty()) {

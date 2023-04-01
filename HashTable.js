@@ -4,7 +4,7 @@ class HashTable {
     this.count = 0;
   }
 
-  _loseloseHashCode(key) {
+  #loseloseHashCode(key) {
     const tableKey = key.toString();
 
     let hash = 0;
@@ -25,13 +25,13 @@ class HashTable {
     return hash % 1013;
   }
 
-  _hashCode(key) {
-    return this._loseloseHashCode(key);
+  #hashCode(key) {
+    return this.#loseloseHashCode(key);
   }
 
   put(key, value) {
     if (key != null && value != null) {
-      const index = this._hashCode(key);
+      const index = this.#hashCode(key);
 
       this.table[index] = [key, value];
 
@@ -43,14 +43,14 @@ class HashTable {
   }
 
   get(key) {
-    const index = this._hashCode(key);
+    const index = this.#hashCode(key);
     const valuePair = this.table[index];
 
     return valuePair == null ? undefined : valuePair;
   }
 
   remove(key) {
-    const index = this._hashCode(key);
+    const index = this.#hashCode(key);
     const valuePair = this.table[index];
 
     if (valuePair != null) {

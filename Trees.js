@@ -50,23 +50,73 @@ class BST {
     }
   }
 
-  remove(node, element) {}
+  remove(element) {
+    this.root = this.#removeNode(this.root, element);
+  }
+
+  #removeNode(node, element) {
+    if (node == null) {
+      return null;
+    }
+    //inter. the tree recusive
+    if (element < node.element) {
+      node.left = this.#removeNode(node.left, element);
+      return node;
+    } else if (element > node.element) {
+      node.right = this.#removeNode(node.right, element);
+      return node;
+    }
+    //found the node
+    else if (element == node.element) {
+      // 1 - don't have child node
+      if (node.left == null && node.right == null) {
+        node = null;
+        return node;
+      }
+      // 2 - Have just one child node
+      //have right
+      if (node.left == null) {
+        node = node.right;
+
+        return node;
+
+        //have left
+      } else if (node.right == null) {
+        node = node.left;
+
+        return node;
+      }
+      // 3 - have the two child node
+      const aux = this.#minNode(node.right);
+      node.element = aux.element;
+      node.right = this.#removeNode(node.right, aux.element);
+      return node;
+    }
+  }
 
   min() {
-    let current = this.root;
+    return this.#minNode(this.root).element;
+  }
+
+  #minNode(node) {
+    let current = node;
     while (current != null && current.left != null) {
       current = current.left;
     }
-    return current.element;
+    return current;
   }
 
   max() {
-    let current = this.root;
+    return this.#maxNode(this.root).element;
+  }
+
+  #maxNode(node) {
+    let current = node;
     while (current != null && current.right != null) {
       current = current.right;
     }
 
-    return current.element;
+    return current;
   }
 
   contains(element) {
@@ -136,8 +186,13 @@ bst.insert(5);
 bst.insert(46);
 bst.insert(49);
 
-console.log(bst.size());
+console.log(bst.min());
 
-console.log(bst);
+//console.log(bst.size());
+
+//console.log(bst);
 console.log(bst.postOrder());
-console.log(bst.contains(5));
+bst.remove(20);
+//console.log(bst);
+console.log(bst.postOrder());
+//console.log(bst.contains(5));
